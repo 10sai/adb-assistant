@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>ADB Assistant</title>
+    <link rel="stylesheet" href="plugins/ionic/css/ionic.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <script src="plugins/ionic/js/ionic.bundle.js"></script>
+
+    <script src="plugins/adb-driver/adbdriver.js"></script>
+
+    <script src="config.js"></script>
+    <script src="controllers/app.js"></script>
+  </head>
+  <body ng-app="adba" ng-controller="AppCtrl">
+    <ion-pane>
+      <ion-content class="padding">
+        <div class="list">
+          <div class="item item-input-inset">
+            <label class="item-input-wrapper">
+              <input type="text" placeholder="Enter Device IP" ng-model="device.ip" ng-disabled="isConnected">
+            </label>
+            <button class="button button-small button-balanced" ng-if="!isConnected" ng-click="connect()">
+              Connect
+            </button>
+            <button class="button button-small button-assertive" ng-if="isConnected" ng-click="disconnect()">
+              Disconnect
+            </button>
+          </div>
+        </div>
+        <div class="list">
+          <div class="item item-thumbnail-left">
+            <img src="assets/img/apk-icon.png">
+            <h2>{{manifest.name || "No Apk Selected"}}</h2>
+            <p>{{manifest.package || "Click select to browse apk files."}}</p>
+            <span class="item-note">{{manifest.versionName}}</span>
+            <button class="button button-small" ng-click="select()">Select</button>
+          </div>
+        </div>
+        <button class="button button-block button-positive" ng-disabled="!isConnected" ng-click="install()">INSTALL</button>
+      </ion-content>
+      <div class="console">
+          <div class="console-log" id="log">
+          </div>
+          <p class="copyright">Copyright &copy; 2018 Tensai Technology Inc.</p>
+      </div>
+    </ion-pane>
+
+    <script>
+      // You can also require other files to run in this process
+      require('./rnderer.js')
+    </script>
+  </body>
+</html>
